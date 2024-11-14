@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Upload</title>
+    <link rel="stylesheet" href="/static/styles.css"> 
+
+</head>
+<body>    
+    <div class="container">
+        <h2>CSV Geocoding Processor</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit" class="button">Upload & Process</button>
+        </form>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="loading" style="display: none;">Processing file... Please wait...</div>
+        <button id="downloadBtn" class="button" onclick="downloadFile()" style="display: none;">
+            Download Processed File
+        </button>
+    </div>
+    </form>
+    <script>
+        document.getElementById('uploadForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            if (response.ok) {
+                alert('File uploaded successfully: ' + result.filename);
+            } else {
+                alert('Error: ' + result.error);
+            }
+        };
+    </script>
+</body>
+</html>
