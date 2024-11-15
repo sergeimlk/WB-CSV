@@ -23,6 +23,30 @@ body {
     overflow: hidden;
 }
 
+.loading {
+    color: orange;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid orange;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+
 h1 {
     font-size: 3rem;
     /* Ajustez cette valeur pour agrandir le texte */
