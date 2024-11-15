@@ -6,61 +6,76 @@
     <title>CSV DATA CONVERTOR</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
+<style>
+    /* Styles pour l'animation */
+    .loader {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        animation: rotate 1.5s linear infinite, scalePulse 1.5s ease-in-out infinite alternate;
+    }
+
+    /* Animation de rotation */
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Animation de pulsation */
+    @keyframes scalePulse {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1.2);
+        }
+    }
+</style>
 <body>
+    <div class="dank-ass-loader" id="loader" style="display: none;">
+        <div class="row">
+            <div class="arrow up outer outer-1"></div>
+            <div class="arrow down outer outer-2"></div>
+            <div class="arrow up outer outer-3"></div>
+            <div class="arrow down outer outer-4"></div>
+            <div class="arrow up outer outer-5"></div>
+        </div>
+        <div class="row">
+            <div class="arrow down outer outer-6"></div>
+            <div class="arrow up outer outer-7"></div>
+            <div class="arrow down outer outer-8"></div>
+            <div class="arrow up outer outer-9"></div>
+            <div class="arrow down outer outer-10"></div>
+        </div>
+        <div class="row">
+            <div class="arrow up outer outer-11"></div>
+            <div class="arrow down outer outer-12"></div>
+            <div class="arrow up outer outer-13"></div>
+            <div class="arrow down outer outer-14"></div>
+            <div class="arrow up outer outer-15"></div>
+        </div>
+        <div class="row">
+            <div class="arrow down outer outer-16"></div>
+            <div class="arrow up outer outer-17"></div>
+            <div class="arrow down outer outer-18"></div>
+            <div class="arrow up outer outer-19"></div>
+            <div class="arrow down outer outer-20"></div>
+        </div>
+    </div>
     <div class="container">
         <h2>Ajoutez le document csv à formater</h2>
         <form id="uploadForm" enctype="multipart/form-data">
             <input type="file" name="file" accept=".csv" required>
-            <button type="submit" class="button">Convertir CSV</button>
+            <button type="submit" id="convertBtn" class="button">Convertir CSV</button>
         </form>
         <div id="error" class="error" style="display: none;"></div>
         <div id="loading" class="loading" style="display: none;">Processing file... Please wait...</div>
         <button id="downloadBtn" class="button" style="display: none;">Télécharger le fichier</button>
     </div>
-
-    <script>
-        document.getElementById('uploadForm').onsubmit = async function (event) {
-            event.preventDefault();
-
-            // Show loading message
-            const loadingDiv = document.getElementById('loading');
-            const errorDiv = document.getElementById('error');
-            const downloadBtn = document.getElementById('downloadBtn');
-
-            loadingDiv.style.display = 'block';
-            errorDiv.style.display = 'none';
-            downloadBtn.style.display = 'none';
-
-            const formData = new FormData(this);
-
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    alert('Votre tableau de données a été converti au même format que la Base de données du SSO!');
-
-                    // Set up the download button
-                    downloadBtn.style.display = 'inline-block';
-                    downloadBtn.onclick = function () {
-                        window.location.href = `/download/${result.filename}`;
-                    };
-                } else {
-                    const result = await response.json();
-                    errorDiv.style.display = 'block';
-                    errorDiv.textContent = `Error: ${result.error}`;
-                }
-            } catch (error) {
-                errorDiv.style.display = 'block';
-                errorDiv.textContent = `Error: ${error.message}`;
-            } finally {
-                // Hide loading message
-                loadingDiv.style.display = 'none';
-            }
-        };
-    </script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
